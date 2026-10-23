@@ -1,6 +1,6 @@
 ---
-import Base from "../layouts/Base.astro";
 import { designs } from "../data/business";
+import Base from "../layouts/Base.astro";
 
 const swatches: Record<string, { bg: string; fg: string; accent: string; font: string }> = {
   werkstatt: { bg: "#1a1b1d", fg: "#efece4", accent: "#ff5a1f", font: "'Barlow Condensed'" },
@@ -24,7 +24,7 @@ const swatches: Record<string, { bg: string; fg: string; accent: string; font: s
           return (
             <li>
               <a
-                href={`/entwurf/${d.slug}`}
+                href={`${import.meta.env.BASE_URL}entwurf/${d.slug}`}
                 style={`--bg:${s.bg};--fg:${s.fg};--accent:${s.accent};--font:${s.font}`}
               >
                 <span class="n">{i + 1}</span>
