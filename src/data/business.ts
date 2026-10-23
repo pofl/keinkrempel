@@ -11,8 +11,7 @@ export const business = {
     city: "Chemnitz",
     district: "Bernsdorf",
   },
-  mapsHref:
-    "https://www.google.com/maps/search/?api=1&query=Reichenhainer+Stra%C3%9Fe+48%2C+09126+Chemnitz",
+  mapsHref: "https://www.google.com/maps/search/?api=1&query=Reichenhainer+Stra%C3%9Fe+48%2C+09126+Chemnitz",
   hours: [
     { days: "Mo – Fr", time: "10 – 17 Uhr" },
     { days: "Sa", time: "10 – 12 Uhr" },
@@ -47,8 +46,7 @@ export const business = {
         text: "Fehler auslesen, Ursache genau eingrenzen, Kostenvoranschlag für die Reparatur.",
       },
     ],
-    parts:
-      "Großes Ersatzteillager für fast jede Marke – gebraucht oder neu, schnell und preiswert.",
+    parts: "Großes Ersatzteillager für fast jede Marke – gebraucht oder neu, schnell und preiswert.",
   },
   delivery: {
     intro:

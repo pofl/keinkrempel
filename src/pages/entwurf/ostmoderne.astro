@@ -22,7 +22,8 @@ const codes = ["WM", "TR", "HD", "GS", "KG"];
         <p class="pre">Katalog Herbst/Winter</p>
         <h1>Gute Geräte.<br /><span>Zweite Runde.</span></h1>
         <p class="lede">
-          Generalüberholte Waschmaschinen, Trockner, Herde, Geschirrspüler und Kühlgeräte – solide wie früher, geprüft wie heute.
+          Generalüberholte Waschmaschinen, Trockner, Herde, Geschirrspüler und Kühlgeräte – solide wie früher, geprüft
+          wie heute.
         </p>
         <a class="btn" href="#besuch">Zum Laden</a>
       </div>
@@ -136,7 +137,13 @@ const codes = ["WM", "TR", "HD", "GS", "KG"];
           </div>
           <div>
             <h4>Geöffnet</h4>
-            {b.hours.map((h) => <p><b>{h.days}</b> {h.time}</p>)}
+            {
+              b.hours.map((h) => (
+                <p>
+                  <b>{h.days}</b> {h.time}
+                </p>
+              ))
+            }
           </div>
           <div>
             <h4>Fernruf</h4>
@@ -414,9 +421,7 @@ const codes = ["WM", "TR", "HD", "GS", "KG"];
     display: block;
     aspect-ratio: 1;
     border-radius: 999px 999px 0.75rem 0.75rem;
-    background:
-      radial-gradient(circle at 50% 62%, var(--paper) 0 22%, var(--brown) 22% 26%, transparent 26%),
-      var(--c);
+    background: radial-gradient(circle at 50% 62%, var(--paper) 0 22%, var(--brown) 22% 26%, transparent 26%), var(--c);
     border: 3px solid var(--brown);
     margin: 0.5rem 0;
   }

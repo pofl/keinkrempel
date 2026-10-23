@@ -7,7 +7,11 @@ import { business as b } from "../../data/business";
 const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
 ---
 
-<Base title="kein-krempel – Leuchtreklame" current="leuchtreklame" fonts="family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300">
+<Base
+  title="kein-krempel – Leuchtreklame"
+  current="leuchtreklame"
+  fonts="family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300"
+>
   <div class="page">
     <section class="night">
       <div class="lightbox">
@@ -190,7 +194,9 @@ const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
   }
   h1 {
     margin: 0;
-    font: 500 clamp(1.6rem, 6vw, 5.2rem) "Jost", sans-serif;
+    font:
+      500 clamp(1.6rem, 6vw, 5.2rem) "Jost",
+      sans-serif;
   }
   h1 :global(.wordmark > span:first-child) {
     text-shadow: 0 0 18px rgb(255 255 255 / 0.8);
@@ -220,7 +226,8 @@ const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
   .street :global(.lit) {
     width: min(100%, 210px);
     justify-self: center;
-    filter: brightness(0.75) sepia(0.6) saturate(2.5) hue-rotate(-12deg) drop-shadow(0 -10px 30px rgb(229 100 42 / 0.35));
+    filter: brightness(0.75) sepia(0.6) saturate(2.5) hue-rotate(-12deg)
+      drop-shadow(0 -10px 30px rgb(229 100 42 / 0.35));
   }
   .night-copy {
     text-align: center;
@@ -231,7 +238,9 @@ const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
   }
   .tube {
     display: inline-block;
-    font: 300 clamp(2.2rem, 5vw, 3.8rem) "Jost", sans-serif;
+    font:
+      300 clamp(2.2rem, 5vw, 3.8rem) "Jost",
+      sans-serif;
     letter-spacing: 0.25em;
     padding: 0.2rem 0.6rem 0.2rem 0.85rem;
     border: 2px solid currentColor;

@@ -12,7 +12,13 @@ import Base from "../../layouts/Base.astro";
     <header class="topbar">
       <span class="logo">KEIN—KREMPEL<sup>®</sup></span>
       <span class="meta">
-        {b.hours.map((h) => <span>{h.days} {h.time}</span>)}
+        {
+          b.hours.map((h) => (
+            <span>
+              {h.days} {h.time}
+            </span>
+          ))
+        }
       </span>
       <a class="call" href={b.phoneHref}>☎ {b.phone}</a>
     </header>
@@ -133,7 +139,15 @@ import Base from "../../layouts/Base.astro";
             <em>{b.address.note}</em>
           </dd>
           <dt>Öffnungszeiten</dt>
-          <dd>{b.hours.map((h) => <div>{h.days} &nbsp; {h.time}</div>)}</dd>
+          <dd>
+            {
+              b.hours.map((h) => (
+                <div>
+                  {h.days} &nbsp; {h.time}
+                </div>
+              ))
+            }
+          </dd>
           <dt>Karte</dt>
           <dd><a href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route planen ↗</a></dd>
         </dl>

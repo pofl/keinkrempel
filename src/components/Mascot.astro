@@ -8,7 +8,12 @@ const { kind, class: className } = Astro.props;
 const ink = "#1d1d1d";
 ---
 
-<svg class:list={["mascot", className]} viewBox="0 0 220 270" role="img" aria-label={kind === "washer" ? "Waschmaschine mit Daumen hoch" : "Herd mit Daumen hoch"}>
+<svg
+  class:list={["mascot", className]}
+  viewBox="0 0 220 270"
+  role="img"
+  aria-label={kind === "washer" ? "Waschmaschine mit Daumen hoch" : "Herd mit Daumen hoch"}
+>
   <g stroke={ink} stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M78 222v26h-18M142 222v26h18" fill="none"></path>
     <ellipse cx="56" cy="250" rx="14" ry="7" fill="#3a3a3a"></ellipse>

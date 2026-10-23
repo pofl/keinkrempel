@@ -1,8 +1,8 @@
 ---
-import Base from "../../layouts/Base.astro";
 import Mascot from "../../components/Mascot.astro";
 import Wordmark from "../../components/Wordmark.astro";
 import { business as b } from "../../data/business";
+import Base from "../../layouts/Base.astro";
 
 const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
 ---
@@ -73,7 +73,9 @@ const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
             {
               b.delivery.options.map((o) => (
                 <div>
-                  <dt>{o.name} <small>{o.detail}</small></dt>
+                  <dt>
+                    {o.name} <small>{o.detail}</small>
+                  </dt>
                   <dd>{o.price}</dd>
                 </div>
               ))
@@ -93,7 +95,13 @@ const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
 
     <section class="wall visit" id="besuch">
       <figure class="window photo">
-        <img src={photo} alt="Ladenfront von kein-krempel in Chemnitz mit orangefarbener Fassade" width="600" height="339" loading="lazy" />
+        <img
+          src={photo}
+          alt="Ladenfront von kein-krempel in Chemnitz mit orangefarbener Fassade"
+          width="600"
+          height="339"
+          loading="lazy"
+        />
       </figure>
       <div class="visit-text">
         <h2>Hier finden Sie uns</h2>

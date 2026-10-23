@@ -1,11 +1,17 @@
 ---
-import Base from "../../layouts/Base.astro";
 import Mascot from "../../components/Mascot.astro";
 import Wordmark from "../../components/Wordmark.astro";
 import { business as b } from "../../data/business";
+import Base from "../../layouts/Base.astro";
 
 const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
-const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!", "Frisch geputzt und desinfiziert.", "Schleudern unter Volllast – läuft!", "Prüfung nach DIN VDE 0701. Bestanden!"];
+const stripCaptions = [
+  "Erstmal gründlich durchgecheckt …",
+  "Kalk? Weg damit!",
+  "Frisch geputzt und desinfiziert.",
+  "Schleudern unter Volllast – läuft!",
+  "Prüfung nach DIN VDE 0701. Bestanden!",
+];
 ---
 
 <Base
@@ -23,8 +29,9 @@ const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!
       <div class="hero-copy">
         <h1>Wir sind nicht alt.<br /><span>Wir sind erfahren.</span></h1>
         <p>
-          Generalüberholte Waschmaschinen, Trockner, Herde, Geschirrspüler und Kühlgeräte aus Chemnitz – mit bis zu {b.warrantyMonths} Monaten
-          Garantie.
+          Generalüberholte Waschmaschinen, Trockner, Herde, Geschirrspüler und Kühlgeräte aus Chemnitz – mit bis zu {
+            b.warrantyMonths
+          } Monaten Garantie.
         </p>
         <a class="btn" href="#besuch">Besuch uns im Laden</a>
       </div>
@@ -94,7 +101,9 @@ const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!
         {
           b.delivery.options.map((o) => (
             <div class="price">
-              <span>{o.name} · {o.detail}</span>
+              <span>
+                {o.name} · {o.detail}
+              </span>
               <b>{o.price}</b>
             </div>
           ))
@@ -111,7 +120,13 @@ const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!
 
     <section class="visit" id="besuch">
       <figure>
-        <img src={photo} alt="Ladenfront von kein-krempel mit den Maskottchen an der Wand" width="600" height="339" loading="lazy" />
+        <img
+          src={photo}
+          alt="Ladenfront von kein-krempel mit den Maskottchen an der Wand"
+          width="600"
+          height="339"
+          loading="lazy"
+        />
         <figcaption class="bubble">Hier wohnen wir!</figcaption>
       </figure>
       <div>
@@ -121,7 +136,15 @@ const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!
           {b.address.city}-{b.address.district}
         </p>
         <p>{b.address.note}</p>
-        <ul class="hours">{b.hours.map((h) => <li><b>{h.days}</b> {h.time}</li>)}</ul>
+        <ul class="hours">
+          {
+            b.hours.map((h) => (
+              <li>
+                <b>{h.days}</b> {h.time}
+              </li>
+            ))
+          }
+        </ul>
         <div class="actions">
           <a class="btn" href={b.phoneHref}>{b.phone}</a>
           <a class="btn alt" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route ↗</a>
@@ -234,7 +257,28 @@ const stripCaptions = ["Erstmal gründlich durchgecheckt …", "Kalk? Weg damit!
     position: absolute;
     inset: 4%;
     background: var(--orange);
-    clip-path: polygon(50% 0, 59% 18%, 79% 9%, 77% 30%, 98% 32%, 85% 49%, 100% 64%, 79% 70%, 84% 91%, 63% 84%, 50% 100%, 37% 84%, 16% 91%, 21% 70%, 0 64%, 15% 49%, 2% 32%, 23% 30%, 21% 9%, 41% 18%);
+    clip-path: polygon(
+      50% 0,
+      59% 18%,
+      79% 9%,
+      77% 30%,
+      98% 32%,
+      85% 49%,
+      100% 64%,
+      79% 70%,
+      84% 91%,
+      63% 84%,
+      50% 100%,
+      37% 84%,
+      16% 91%,
+      21% 70%,
+      0 64%,
+      15% 49%,
+      2% 32%,
+      23% 30%,
+      21% 9%,
+      41% 18%
+    );
     animation: spin 40s linear infinite;
   }
   .burst::after {
