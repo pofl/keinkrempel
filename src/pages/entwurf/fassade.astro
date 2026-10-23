@@ -1,0 +1,456 @@
+---
+import Base from "../../layouts/Base.astro";
+import Mascot from "../../components/Mascot.astro";
+import Wordmark from "../../components/Wordmark.astro";
+import { business as b } from "../../data/business";
+
+const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
+---
+
+<Base
+  title="kein-krempel – Fassade"
+  current="fassade"
+  fonts="family=Lexend+Exa:wght@400;600;700&family=Lexend:wght@300;400;600"
+>
+  <div class="page">
+    <header class="coping">
+      <nav>
+        <a href="#sortiment">Sortiment</a>
+        <a href="#service">Service</a>
+        <a href="#besuch">Anfahrt</a>
+      </nav>
+      <a class="phone" href={b.phoneHref}>{b.phone}</a>
+    </header>
+
+    <section class="wall hero">
+      <h1><Wordmark kein="#fff" krempel="#141414" /></h1>
+      <p class="sub">Generalüberholte Haushaltsgeräte · Chemnitz</p>
+      <div class="mascots" aria-hidden="true">
+        <Mascot kind="stove" class="m m-left" />
+        <Mascot kind="washer" class="m m-right" />
+      </div>
+      <div class="sill"></div>
+    </section>
+
+    <section class="wall windows" id="sortiment">
+      <article class="window">
+        <div class="pane">
+          <h2>Sortiment</h2>
+          <ul class="cats">{b.categories.map((c) => <li>{c.name}</li>)}</ul>
+        </div>
+      </article>
+      <article class="window wide">
+        <div class="pane">
+          <p class="big">{b.warrantyMonths}<span>Monate<br />Garantie</span></p>
+          <ul class="checks">{b.refurbishSteps.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="wall windows three" id="service">
+      <article class="window">
+        <div class="pane">
+          <h2>Reparatur</h2>
+          <p>{b.repair.intro}</p>
+          <dl>
+            {
+              b.repair.options.map((o) => (
+                <div>
+                  <dt>{o.name}</dt>
+                  <dd>{o.price}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="fine">{b.repair.parts}</p>
+        </div>
+      </article>
+      <article class="window">
+        <div class="pane">
+          <h2>Lieferung</h2>
+          <p>{b.delivery.intro}</p>
+          <dl>
+            {
+              b.delivery.options.map((o) => (
+                <div>
+                  <dt>{o.name} <small>{o.detail}</small></dt>
+                  <dd>{o.price}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="fine">{b.delivery.note}</p>
+        </div>
+      </article>
+      <article class="window">
+        <div class="pane">
+          <h2>Ankauf</h2>
+          <p>{b.pickup.intro}</p>
+          <ol>{b.pickup.checklist.map((c) => <li>{c}</li>)}</ol>
+        </div>
+      </article>
+    </section>
+
+    <section class="wall visit" id="besuch">
+      <figure class="window photo">
+        <img src={photo} alt="Ladenfront von kein-krempel in Chemnitz mit orangefarbener Fassade" width="600" height="339" loading="lazy" />
+      </figure>
+      <div class="visit-text">
+        <h2>Hier finden Sie uns</h2>
+        <p class="addr">
+          {b.address.street}<br />
+          {b.address.zip}
+          {b.address.city}-{b.address.district}
+        </p>
+        <p class="note">{b.address.note}</p>
+        <table>
+          {
+            b.hours.map((h) => (
+              <tr>
+                <th>{h.days}</th>
+                <td>{h.time}</td>
+              </tr>
+            ))
+          }
+        </table>
+        <div class="actions">
+          <a class="btn" href={b.phoneHref}>{b.phone}</a>
+          <a class="btn ghost" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ground">
+      <span>{b.legalName}</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .page {
+    --orange: #e5642a;
+    --orange-d: #c9521d;
+    --gray: #8e9194;
+    --gray-d: #5d6063;
+    --ink: #141414;
+    --glass: #eef1f2;
+    --wide: "Lexend Exa", sans-serif;
+    background: var(--orange);
+    color: var(--ink);
+    font-family: "Lexend", sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    padding-bottom: 4.5rem;
+  }
+  a {
+    color: inherit;
+  }
+
+  .coping {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem clamp(1rem, 4vw, 3rem);
+    background: linear-gradient(var(--gray) 0 85%, var(--gray-d) 85%);
+    color: #fff;
+    font: 600 0.75rem var(--wide);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    box-shadow: 0 6px 12px rgb(0 0 0 / 0.18);
+  }
+  .coping nav {
+    display: flex;
+    gap: 2rem;
+  }
+  .coping a {
+    text-decoration: none;
+  }
+  .phone {
+    background: var(--ink);
+    padding: 0.5rem 0.9rem;
+  }
+
+  .wall {
+    position: relative;
+    background-color: var(--orange);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.2 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .hero {
+    min-height: min(88vh, 820px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  h1 {
+    margin: 0;
+    font: 700 clamp(2rem, 7.2vw, 6.5rem) var(--wide);
+    animation: lightup 1.2s ease-out both;
+  }
+  .sub {
+    font: 600 clamp(0.7rem, 1.4vw, 1rem) var(--wide);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 2rem 0 0;
+    animation: fadein 1s 0.6s both;
+  }
+  .mascots {
+    position: absolute;
+    inset: auto 0 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-inline: clamp(0.5rem, 5vw, 6rem);
+    pointer-events: none;
+  }
+  .mascots :global(.m) {
+    width: clamp(110px, 16vw, 210px);
+    animation: hop 0.8s cubic-bezier(0.3, 1.6, 0.5, 1) 0.9s both;
+  }
+  .mascots :global(.m-right) {
+    animation-delay: 1.1s;
+  }
+  .sill {
+    position: absolute;
+    inset: auto 0 0;
+    height: 2.5rem;
+    background: var(--gray);
+    border-top: 6px solid var(--gray-d);
+  }
+
+  .windows {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .windows.three {
+    grid-template-columns: repeat(3, 1fr);
+    padding-top: 0;
+  }
+  .window {
+    margin: 0;
+    background: #fff;
+    padding: 12px;
+    box-shadow:
+      inset 0 0 0 1px #ddd,
+      0 14px 0 -6px var(--gray),
+      0 22px 30px rgb(0 0 0 / 0.18);
+  }
+  .pane {
+    height: 100%;
+    background: linear-gradient(135deg, #fff 0%, var(--glass) 40%, #e3e8ea 100%);
+    border: 1px solid #d5d9db;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    position: relative;
+  }
+  .pane::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 0.7) 48%, transparent 56%);
+    pointer-events: none;
+  }
+  h2 {
+    font: 700 clamp(1.1rem, 2vw, 1.5rem) var(--wide);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    color: var(--orange);
+  }
+  .cats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cats li {
+    font: 600 clamp(1rem, 1.6vw, 1.25rem) var(--wide);
+    letter-spacing: 0.06em;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #cfd4d7;
+  }
+  .wide .pane {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .big {
+    font: 700 clamp(5rem, 12vw, 10rem) / 0.85 var(--wide);
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+  .big span {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    padding-bottom: 0.4rem;
+  }
+  .checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .checks li {
+    padding: 0.45rem 0 0.45rem 2rem;
+    position: relative;
+    font-weight: 400;
+  }
+  .checks li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    background: var(--orange);
+    clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 22%, 86% 8%, 38% 72%);
+  }
+  dl {
+    margin: 1.25rem 0;
+  }
+  dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid #cfd4d7;
+  }
+  dt {
+    font-weight: 400;
+  }
+  dt small {
+    display: block;
+    color: var(--gray-d);
+  }
+  dd {
+    margin: 0;
+    font: 700 1.2rem var(--wide);
+    white-space: nowrap;
+  }
+  .fine {
+    font-size: 0.82rem;
+    color: var(--gray-d);
+  }
+  ol {
+    padding-left: 1.2rem;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .visit {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    color: #fff;
+  }
+  .photo img {
+    width: 100%;
+    height: auto;
+  }
+  .visit h2 {
+    color: var(--ink);
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+  }
+  .addr {
+    font: 600 clamp(1.1rem, 2vw, 1.5rem) / 1.4 var(--wide);
+    margin: 0;
+  }
+  .note {
+    margin: 0.4rem 0 1.5rem;
+  }
+  table {
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 0.3rem 2rem 0.3rem 0;
+    font: 600 1rem var(--wide);
+    letter-spacing: 0.06em;
+  }
+  th {
+    color: var(--ink);
+  }
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font: 600 0.85rem var(--wide);
+    letter-spacing: 0.12em;
+    padding: 0.9rem 1.4rem;
+    transition: background 0.2s;
+  }
+  .btn:hover {
+    background: #fff;
+    color: var(--ink);
+  }
+  .btn.ghost {
+    background: transparent;
+    border: 2px solid #fff;
+  }
+
+  .ground {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    background: var(--gray);
+    border-top: 6px solid var(--gray-d);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
+  @keyframes lightup {
+    from {
+      opacity: 0;
+      letter-spacing: 0.4em;
+      filter: blur(6px);
+    }
+  }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes hop {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .coping nav {
+      display: none;
+    }
+    .windows,
+    .windows.three,
+    .visit,
+    .wide .pane {
+      grid-template-columns: 1fr;
+    }
+    .hero {
+      padding-bottom: 12rem;
+    }
+  }
+</style>

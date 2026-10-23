@@ -1,0 +1,509 @@
+---
+import Base from "../../layouts/Base.astro";
+import Mascot from "../../components/Mascot.astro";
+import Wordmark from "../../components/Wordmark.astro";
+import { business as b } from "../../data/business";
+
+const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
+---
+
+<Base title="kein-krempel – Leuchtreklame" current="leuchtreklame" fonts="family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300">
+  <div class="page">
+    <section class="night">
+      <div class="lightbox">
+        <h1><Wordmark kein="#fff" krempel="#141414" /></h1>
+      </div>
+      <div class="glow" aria-hidden="true"></div>
+      <div class="street">
+        <Mascot kind="stove" class="lit" />
+        <div class="night-copy">
+          <p class="open-sign" data-sign>
+            <span class="tube">OFFEN</span>
+          </p>
+          <p class="night-text" data-sign-text>
+            Mo–Fr 10–17 Uhr, Sa 10–12 Uhr. Generalüberholte Haushaltsgeräte mit bis zu {b.warrantyMonths} Monaten Garantie.
+          </p>
+          <a class="btn" href={b.phoneHref}>{b.phone}</a>
+        </div>
+        <Mascot kind="washer" class="lit" />
+      </div>
+    </section>
+
+    <section class="range">
+      <h2>Was bei uns im Schaufenster steht</h2>
+      <ul>
+        {
+          b.categories.map((c, i) => (
+            <li style={`--d:${i * 0.15}s`}>
+              <span>{c.short}</span>
+              {c.name}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="promise">
+      <div class="big">
+        <strong>{b.warrantyMonths}</strong>
+        <span>Monate<br />Garantie</span>
+      </div>
+      <ul>{b.refurbishSteps.map((s) => <li>{s}</li>)}</ul>
+    </section>
+
+    <section class="services">
+      <article>
+        <h3>Reparatur</h3>
+        <p>{b.repair.intro}</p>
+        {
+          b.repair.options.map((o) => (
+            <div class="row">
+              <span>{o.name}</span>
+              <b>{o.price}</b>
+            </div>
+          ))
+        }
+        <p class="fine">{b.repair.parts}</p>
+      </article>
+      <article>
+        <h3>Lieferung</h3>
+        <p>{b.delivery.intro}</p>
+        {
+          b.delivery.options.map((o) => (
+            <div class="row">
+              <span>
+                {o.name}
+                <small>{o.detail}</small>
+              </span>
+              <b>{o.price}</b>
+            </div>
+          ))
+        }
+        <p class="fine">{b.delivery.note}</p>
+      </article>
+      <article>
+        <h3>Abholung & Ankauf</h3>
+        <p>{b.pickup.intro}</p>
+        <ul>{b.pickup.checklist.map((c) => <li>{c}</li>)}</ul>
+      </article>
+    </section>
+
+    <section class="visit" id="besuch">
+      <figure>
+        <img src={photo} alt="Ladenfront von kein-krempel tagsüber" width="600" height="339" loading="lazy" />
+        <figcaption>Bei Tageslicht sieht's so aus.</figcaption>
+      </figure>
+      <div>
+        <h2>Vorbeikommen</h2>
+        <p class="addr">
+          {b.address.street}<br />
+          {b.address.zip}
+          {b.address.city}-{b.address.district}
+        </p>
+        <p class="fine">{b.address.note}</p>
+        <dl>
+          {
+            b.hours.map((h) => (
+              <div>
+                <dt>{h.days}</dt>
+                <dd>{h.time}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a class="btn" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route planen ↗</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>{b.legalName}</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  const sign = document.querySelector("[data-sign]");
+  const text = document.querySelector("[data-sign-text]");
+  if (sign && text) {
+    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Berlin" }));
+    const day = now.getDay();
+    const h = now.getHours() + now.getMinutes() / 60;
+    const open = (day >= 1 && day <= 5 && h >= 10 && h < 17) || (day === 6 && h >= 10 && h < 12);
+    sign.classList.add(open ? "on" : "off");
+    if (!open) {
+      sign.querySelector(".tube")!.textContent = "FEIERABEND";
+      text.textContent = `Gerade geschlossen. ${text.textContent}`;
+    }
+  }
+</script>
+
+<style>
+  .page {
+    --orange: #e5642a;
+    --glow: rgb(255 120 50 / 0.55);
+    --night: #16171a;
+    --night-2: #202226;
+    --gray: #8e9194;
+    --text: #e8e6e3;
+    background: var(--night);
+    color: var(--text);
+    font-family: "Jost", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding-bottom: 5rem;
+    overflow-x: clip;
+  }
+  a {
+    color: inherit;
+  }
+  h2,
+  h3 {
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .night {
+    position: relative;
+    min-height: min(100vh, 900px);
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 18%, rgb(229 100 42 / 0.22), transparent 70%),
+      linear-gradient(#0d0e10, var(--night) 60%, #26282c);
+  }
+  .lightbox {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(#f4793d, var(--orange));
+    padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 5vw, 4rem);
+    border-top: 10px solid var(--gray);
+    box-shadow:
+      0 0 30px var(--glow),
+      0 0 120px rgb(255 120 50 / 0.35),
+      inset 0 0 40px rgb(255 220 180 / 0.35);
+    animation: flicker 2.2s linear both;
+  }
+  h1 {
+    margin: 0;
+    font: 500 clamp(1.6rem, 6vw, 5.2rem) "Jost", sans-serif;
+  }
+  h1 :global(.wordmark > span:first-child) {
+    text-shadow: 0 0 18px rgb(255 255 255 / 0.8);
+  }
+  .glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
+    width: 70%;
+    height: 60%;
+    background: radial-gradient(ellipse at 50% 30%, rgb(229 100 42 / 0.25), transparent 65%);
+    animation: breathe 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .street {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 1fr;
+    align-items: end;
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+  .street :global(.lit) {
+    width: min(100%, 210px);
+    justify-self: center;
+    filter: brightness(0.75) sepia(0.6) saturate(2.5) hue-rotate(-12deg) drop-shadow(0 -10px 30px rgb(229 100 42 / 0.35));
+  }
+  .night-copy {
+    text-align: center;
+    padding-bottom: 2rem;
+  }
+  .open-sign {
+    margin: 0 0 1.5rem;
+  }
+  .tube {
+    display: inline-block;
+    font: 300 clamp(2.2rem, 5vw, 3.8rem) "Jost", sans-serif;
+    letter-spacing: 0.25em;
+    padding: 0.2rem 0.6rem 0.2rem 0.85rem;
+    border: 2px solid currentColor;
+    border-radius: 0.6rem;
+    color: #555;
+  }
+  .on .tube {
+    color: #ffd2b8;
+    text-shadow:
+      0 0 6px #fff,
+      0 0 16px var(--orange),
+      0 0 40px var(--orange);
+    box-shadow:
+      0 0 12px var(--orange),
+      inset 0 0 12px var(--orange);
+    animation: flicker 1.6s 1s linear both;
+  }
+  .off .tube {
+    color: #6a6c70;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+  }
+  .night-text {
+    max-width: 30rem;
+    margin: 0 auto 2rem;
+    color: #b9b7b4;
+  }
+  .btn {
+    display: inline-block;
+    border: 1px solid var(--orange);
+    color: #fff;
+    background: rgb(229 100 42 / 0.12);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    transition: 0.25s;
+  }
+  .btn:hover {
+    background: var(--orange);
+    box-shadow: 0 0 24px var(--glow);
+  }
+
+  section:not(.night) {
+    padding: clamp(3.5rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem);
+  }
+  .range h2,
+  .visit h2 {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--orange);
+    margin-bottom: 2rem;
+  }
+  .range ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .range li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    border-bottom: 1px solid #2c2e33;
+    padding: 0.4rem 0;
+    color: #4a4c51;
+    transition:
+      color 0.25s,
+      text-shadow 0.25s;
+  }
+  .range li span {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    order: 2;
+  }
+  .range li:hover {
+    color: #fff;
+    text-shadow: 0 0 24px var(--glow);
+  }
+  .range li:hover span {
+    color: var(--orange);
+  }
+
+  .promise {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+    background: var(--night-2);
+  }
+  .big {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+  .big strong {
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 700;
+    line-height: 0.8;
+    color: var(--orange);
+    text-shadow: 0 0 40px var(--glow);
+  }
+  .big span {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.9rem;
+  }
+  .promise ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.25rem;
+  }
+  .promise li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  .promise li::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .services article {
+    border: 1px solid #2f3136;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    background: linear-gradient(var(--night-2), var(--night));
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .services article:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 30px rgb(229 100 42 / 0.2);
+  }
+  h3 {
+    font-size: 1.05rem;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid #2f3136;
+  }
+  .row small {
+    display: block;
+    color: var(--gray);
+  }
+  .row b {
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .fine {
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+  .services ul {
+    padding-left: 1.2rem;
+    margin: 0;
+    color: #c9c7c4;
+  }
+
+  .visit {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  figure {
+    margin: 0;
+  }
+  figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    filter: brightness(0.55) saturate(0.8);
+    transition: filter 0.8s;
+  }
+  figure:hover img {
+    filter: none;
+  }
+  figcaption {
+    margin-top: 0.75rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gray);
+  }
+  .addr {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    margin: 0;
+  }
+  dl {
+    margin: 1.5rem 0 2rem;
+  }
+  dl div {
+    display: flex;
+    gap: 1.5rem;
+  }
+  dt {
+    width: 4rem;
+    color: var(--orange);
+  }
+  dd {
+    margin: 0;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    font-size: 0.85rem;
+    color: var(--gray);
+    border-top: 1px solid #2c2e33;
+  }
+
+  @keyframes flicker {
+    0%,
+    8%,
+    14%,
+    30% {
+      opacity: 0.15;
+    }
+    6%,
+    12%,
+    20%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes breathe {
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .street {
+      grid-template-columns: 1fr 1fr;
+    }
+    .night-copy {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+    .promise,
+    .services,
+    .visit {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

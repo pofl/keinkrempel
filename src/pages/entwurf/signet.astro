@@ -1,0 +1,477 @@
+---
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import { business as b } from "../../data/business";
+
+const photo = `${import.meta.env.BASE_URL}images/laden.jpg`;
+const facts = [
+  { n: String(b.warrantyMonths), l: "Monate Garantie" },
+  { n: String(b.refurbishSteps.length), l: "Prüfschritte pro Gerät" },
+  { n: String(b.categories.length), l: "Gerätegruppen" },
+  { n: "1×", l: "Transportpreis pro Fahrt" },
+];
+---
+
+<Base title="kein-krempel – Signet" current="signet" fonts="family=Urbanist:wght@300;400;600;800;900">
+  <div class="page">
+    <section class="hero">
+      <div class="half orange">
+        <Logo class="hero-logo" size="100%" bg="#fff" fg="#141414" />
+      </div>
+      <div class="half black">
+        <p class="eyebrow">Chemnitz · Bernsdorf</p>
+        <h1><span>KEIN</span><span>KREMPEL</span></h1>
+        <p class="claim">Generalüberholte Haushaltsgeräte. Geprüft, gereinigt, mit Garantie.</p>
+        <div class="actions">
+          <a class="btn" href={b.phoneHref}>{b.phone}</a>
+          <a class="link" href="#besuch">Anfahrt &rsaquo;</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="pattern" aria-hidden="true"></div>
+
+    <section class="facts">
+      {
+        facts.map((f) => (
+          <div>
+            <strong>{f.n}</strong>
+            <span>{f.l}</span>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="block">
+      <h2><Logo size="0.9em" bg="#e5642a" fg="#fff" decorative /> Sortiment</h2>
+      <div class="two">
+        <ul class="cats">{b.categories.map((c) => <li>{c.name}</li>)}</ul>
+        <div>
+          <p class="lead">Jedes Gerät durchläuft bei uns denselben Prozess:</p>
+          <ul class="chev">{b.refurbishSteps.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block dark">
+      <h2><Logo size="0.9em" bg="#fff" fg="#141414" decorative /> Service</h2>
+      <div class="three">
+        <article>
+          <h3>Reparatur</h3>
+          <p>{b.repair.intro}</p>
+          {
+            b.repair.options.map((o) => (
+              <div class="row">
+                <span>{o.name}</span>
+                <b>{o.price}</b>
+              </div>
+            ))
+          }
+          <p class="fine">{b.repair.parts}</p>
+        </article>
+        <article>
+          <h3>Lieferung</h3>
+          <p>{b.delivery.intro}</p>
+          {
+            b.delivery.options.map((o) => (
+              <div class="row">
+                <span>
+                  {o.name}
+                  <small>{o.detail}</small>
+                </span>
+                <b>{o.price}</b>
+              </div>
+            ))
+          }
+          <p class="fine">{b.delivery.note}</p>
+        </article>
+        <article>
+          <h3>Abholung & Ankauf</h3>
+          <p>{b.pickup.intro}</p>
+          <ul class="chev">{b.pickup.checklist.map((c) => <li>{c}</li>)}</ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="visit" id="besuch">
+      <div class="half black">
+        <h2>Besuch</h2>
+        <p class="addr">
+          {b.address.street}<br />
+          {b.address.zip}
+          {b.address.city}
+        </p>
+        <p class="muted">{b.address.note}</p>
+        <dl>
+          {
+            b.hours.map((h) => (
+              <div>
+                <dt>{h.days}</dt>
+                <dd>{h.time}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="actions">
+          <a class="btn" href={b.phoneHref}>{b.phone}</a>
+          <a class="link" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route planen &rsaquo;</a>
+        </div>
+      </div>
+      <div class="half orange photo">
+        <img src={photo} alt="Ladenfront von kein-krempel" width="600" height="339" loading="lazy" />
+      </div>
+    </section>
+
+    <footer>
+      <Logo size="1.6rem" bg="#e5642a" fg="#fff" />
+      <span>{b.legalName}</span>
+      <span class="spacer"></span>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .page {
+    --orange: #e5642a;
+    --ink: #141414;
+    --gray: #8e9194;
+    --soft: #f4f3f1;
+    --pad: clamp(1.25rem, 5vw, 4rem);
+    background: var(--soft);
+    color: var(--ink);
+    font-family: "Urbanist", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding-bottom: 4.5rem;
+  }
+  a {
+    color: inherit;
+  }
+
+  .hero,
+  .visit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero {
+    min-height: min(92vh, 860px);
+  }
+  .half {
+    padding: var(--pad);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .orange {
+    background: var(--orange);
+  }
+  .black {
+    background: var(--ink);
+    color: #fff;
+  }
+  .hero .orange {
+    align-items: center;
+  }
+  .hero .orange :global(.hero-logo) {
+    width: min(70%, 380px);
+    height: auto;
+    filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.25));
+    animation: settle 1s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+  .hero .orange :global(.hero-logo path) {
+    stroke-dasharray: 80;
+    animation: draw 1s 0.4s ease-out both;
+  }
+  .eyebrow {
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--orange);
+    margin: 0 0 1.5rem;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: clamp(2.6rem, 6.5vw, 6rem);
+    line-height: 1;
+    letter-spacing: 0.22em;
+  }
+  h1 span {
+    display: block;
+    animation: track 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+  h1 span:last-child {
+    font-weight: 900;
+    animation-delay: 0.15s;
+  }
+  .claim {
+    max-width: 26rem;
+    color: #bbb;
+    margin: 2rem 0;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.95rem 1.5rem;
+    border-radius: 0.6rem;
+    transition: background 0.2s;
+  }
+  .btn:hover {
+    background: #fff;
+    color: var(--ink);
+  }
+  .link {
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid var(--orange);
+  }
+
+  .pattern {
+    height: 90px;
+    background-color: var(--ink);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 100 100'%3E%3Cg stroke='%23e5642a' stroke-width='9' fill='none'%3E%3Cpath d='M43 20v60M57 20v60M43 50 19 20M43 50 19 80M57 50l24-30M57 50l24 30'/%3E%3C/g%3E%3C/svg%3E");
+    animation: pan 12s linear infinite;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid #ddd;
+  }
+  .facts div {
+    padding: 2.5rem var(--pad);
+    display: flex;
+    flex-direction: column;
+  }
+  .facts div + div {
+    border-left: 1px solid #ddd;
+  }
+  .facts strong {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--orange);
+  }
+  .facts span {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+  }
+
+  .block {
+    padding: clamp(3.5rem, 7vw, 6rem) var(--pad);
+  }
+  .block.dark {
+    background: var(--ink);
+    color: #fff;
+  }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .cats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cats li {
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #d8d8d8;
+    transition:
+      color 0.2s,
+      font-weight 0.2s;
+  }
+  .cats li:hover {
+    color: var(--orange);
+    font-weight: 800;
+  }
+  .lead {
+    font-weight: 600;
+    margin-top: 0;
+  }
+  .chev {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .chev li {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 2.25rem;
+  }
+  .chev li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.85rem;
+    width: 1.3rem;
+    height: 0.9rem;
+    background: var(--orange);
+    clip-path: polygon(0 0, 22% 0, 50% 40%, 78% 0, 100% 0, 60% 50%, 100% 100%, 78% 100%, 50% 60%, 22% 100%, 0 100%, 40% 50%);
+  }
+
+  .three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .three article {
+    background: #1f1f1f;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    border-top: 6px solid var(--orange);
+  }
+  h3 {
+    margin: 0 0 0.75rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid #333;
+  }
+  .row small {
+    display: block;
+    color: var(--gray);
+  }
+  .row b {
+    color: var(--orange);
+    font-size: 1.3rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .fine {
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+
+  .addr {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .muted {
+    color: var(--gray);
+  }
+  dl {
+    margin: 1.5rem 0 2rem;
+  }
+  dl div {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: 600;
+  }
+  dt {
+    color: var(--orange);
+    width: 4rem;
+  }
+  dd {
+    margin: 0;
+  }
+  .photo {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    mix-blend-mode: multiply;
+    transition:
+      filter 0.6s,
+      mix-blend-mode 0.6s;
+  }
+  .photo:hover img {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem var(--pad);
+    font-size: 0.9rem;
+  }
+  .spacer {
+    flex: 1;
+  }
+
+  @keyframes settle {
+    from {
+      opacity: 0;
+      transform: scale(0.8) rotate(-8deg);
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 80;
+    }
+  }
+  @keyframes track {
+    from {
+      opacity: 0;
+      letter-spacing: 0.6em;
+    }
+  }
+  @keyframes pan {
+    to {
+      background-position: 90px 0;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero,
+    .visit,
+    .two,
+    .three {
+      grid-template-columns: 1fr;
+    }
+    .hero .orange {
+      padding-block: 4rem;
+    }
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+    .facts div:nth-child(3) {
+      border-left: 0;
+    }
+    .photo {
+      min-height: 240px;
+    }
+  }
+</style>

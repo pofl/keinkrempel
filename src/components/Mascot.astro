@@ -1,0 +1,94 @@
+---
+interface Props {
+  kind: "washer" | "stove";
+  class?: string;
+}
+
+const { kind, class: className } = Astro.props;
+const ink = "#1d1d1d";
+---
+
+<svg class:list={["mascot", className]} viewBox="0 0 220 270" role="img" aria-label={kind === "washer" ? "Waschmaschine mit Daumen hoch" : "Herd mit Daumen hoch"}>
+  <g stroke={ink} stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M78 222v26h-18M142 222v26h18" fill="none"></path>
+    <ellipse cx="56" cy="250" rx="14" ry="7" fill="#3a3a3a"></ellipse>
+    <ellipse cx="164" cy="250" rx="14" ry="7" fill="#3a3a3a"></ellipse>
+    {
+      kind === "washer" ? (
+        <>
+          <path d="M40 120c-18 12-26 34-24 56" fill="none" />
+          <circle cx="16" cy="182" r="11" fill="#fff" />
+          <rect x="40" y="42" width="140" height="182" rx="16" fill="#f4f4f4" />
+          <path d="M40 82h140" />
+          <rect x="54" y="56" width="42" height="14" rx="4" fill="#d6d6d6" />
+          <circle cx="128" cy="63" r="6" fill="#bbb" />
+          <circle cx="158" cy="63" r="9" fill="#fff" />
+          <circle cx="110" cy="152" r="52" fill="#c9cdd0" />
+          <circle cx="110" cy="152" r="39" fill="#eef1f3" />
+          <path d="M85 128q10-8 18-2M117 126q8-6 18 2" fill="none" />
+          <ellipse cx="95" cy="144" rx="7" ry="9" fill={ink} />
+          <ellipse cx="125" cy="144" rx="7" ry="9" fill={ink} />
+          <path d="M92 166q18 18 36 0" fill="#fff" />
+        </>
+      ) : (
+        <>
+          <path d="M180 130c18 10 24 30 22 50" fill="none" />
+          <circle cx="202" cy="186" r="11" fill="#fff" />
+          <rect x="40" y="28" width="140" height="26" rx="6" fill="#d6d6d6" />
+          <rect x="40" y="54" width="140" height="170" rx="10" fill="#f4f4f4" />
+          <ellipse cx="78" cy="54" rx="22" ry="5" fill="#3a3a3a" />
+          <ellipse cx="142" cy="54" rx="22" ry="5" fill="#3a3a3a" />
+          <circle cx="66" cy="76" r="7" fill="#bbb" />
+          <circle cx="90" cy="76" r="7" fill="#bbb" />
+          <circle cx="130" cy="76" r="7" fill="#bbb" />
+          <circle cx="154" cy="76" r="7" fill="#bbb" />
+          <path d="M40 94h140M78 106h64" />
+          <rect x="56" y="118" width="108" height="86" rx="10" fill="#c9cdd0" />
+          <path d="M84 138q10-8 18-2M118 136q8-6 18 2" fill="none" />
+          <ellipse cx="95" cy="154" rx="7" ry="9" fill={ink} />
+          <ellipse cx="125" cy="154" rx="7" ry="9" fill={ink} />
+          <path d="M92 176q18 18 36 0" fill="#fff" />
+        </>
+      )
+    }
+    <g class="thumb" style={`transform-origin:${kind === "washer" ? "180px 120px" : "40px 120px"}`}>
+      {
+        kind === "washer" ? (
+          <>
+            <path d="M180 124c16-6 26-22 28-40" fill="none" />
+            <rect x="194" y="70" width="22" height="22" rx="7" fill="#fff" />
+            <path d="M200 70V52q0-6 6-6t5 7l-1 17" fill="#fff" />
+          </>
+        ) : (
+          <>
+            <path d="M40 124c-16-6-26-22-28-40" fill="none" />
+            <rect x="4" y="70" width="22" height="22" rx="7" fill="#fff" />
+            <path d="M20 70V52q0-6-6-6t-5 7l1 17" fill="#fff" />
+          </>
+        )
+      }
+    </g>
+  </g>
+</svg>
+
+<style>
+  .mascot {
+    overflow: visible;
+  }
+  .thumb {
+    animation: thumb 2.4s ease-in-out infinite;
+  }
+  @keyframes thumb {
+    0%,
+    70%,
+    100% {
+      transform: rotate(0deg);
+    }
+    80% {
+      transform: rotate(-8deg);
+    }
+    90% {
+      transform: rotate(6deg);
+    }
+  }
+</style>

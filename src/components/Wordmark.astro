@@ -1,0 +1,33 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  kein?: string;
+  krempel?: string;
+  logoBg?: string;
+  logoFg?: string;
+  class?: string;
+}
+
+const { kein = "#fff", krempel = "#111", logoBg = "#fff", logoFg = "#111", class: className } = Astro.props;
+---
+
+<span class:list={["wordmark", className]} aria-label="kein krempel">
+  <span style={`color:${kein}`} aria-hidden="true">KEIN</span>
+  <Logo size="1.15em" bg={logoBg} fg={logoFg} decorative />
+  <span style={`color:${krempel}`} aria-hidden="true">KREMPEL</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .wordmark > span:last-child {
+    margin-right: -0.18em;
+  }
+</style>

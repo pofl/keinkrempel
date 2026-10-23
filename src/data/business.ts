@@ -99,4 +99,29 @@ export const designs = [
     name: "Ostmoderne",
     mood: "Retro-Katalog der 70er, Karl-Marx-Stadt-Nostalgie. Senf, Petrol, Rundungen.",
   },
+  {
+    slug: "fassade",
+    name: "Fassade",
+    mood: "Die Ladenfront als Website: orange Wand, weite Versalien, Inhalte in weißen Fenstern.",
+  },
+  {
+    slug: "maskottchen",
+    name: "Maskottchen",
+    mood: "Die Comic-Geräte von der Hauswand erzählen. Sprechblasen, Daumen hoch, viel Weiß.",
+  },
+  {
+    slug: "signet",
+    name: "Signet",
+    mood: "Das KK-Zeichen als Markensystem. Muster, harte Orange-Schwarz-Teilung, klar und modern.",
+  },
+  {
+    slug: "typenschild",
+    name: "Typenschild",
+    mood: "Geräte-Typenschilder in Aluminiumgrau, Markenorange als Prüfsiegel.",
+  },
+  {
+    slug: "leuchtreklame",
+    name: "Leuchtreklame",
+    mood: "Die Fassade nach Feierabend: dunkelgraue Nacht, das Schild leuchtet orange.",
+  },
 ] as const;

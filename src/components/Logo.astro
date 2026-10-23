@@ -1,0 +1,28 @@
+---
+interface Props {
+  size?: string;
+  bg?: string;
+  fg?: string;
+  class?: string;
+  decorative?: boolean;
+}
+
+const { size = "1em", bg = "#fff", fg = "#111", class: className, decorative = false } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  role={decorative ? undefined : "img"}
+  aria-label={decorative ? undefined : "kein-krempel Logo"}
+  aria-hidden={decorative ? "true" : undefined}
+  style={`--logo-bg:${bg};--logo-fg:${fg}`}
+>
+  <rect x="2" y="2" width="96" height="96" rx="18" fill="var(--logo-bg)"></rect>
+  <g stroke="var(--logo-fg)" stroke-width="9" fill="none">
+    <path d="M43 20v60M57 20v60" stroke-linecap="square"></path>
+    <path d="M44 50 19 20M44 50 19 80M56 50l25-30M56 50l25 30"></path>
+  </g>
+</svg>

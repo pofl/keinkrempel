@@ -8,15 +8,20 @@ const swatches: Record<string, { bg: string; fg: string; accent: string; font: s
   waschsalon: { bg: "#ffd23f", fg: "#14213d", accent: "#ff5d4a", font: "'Bricolage Grotesque'" },
   raster: { bg: "#f7f6f2", fg: "#0b0b0b", accent: "#e3120b", font: "'Archivo'" },
   ostmoderne: { bg: "#d4572a", fg: "#fbf3e1", accent: "#e3a72f", font: "'Shrikhand'" },
+  fassade: { bg: "#e5642a", fg: "#fff", accent: "#141414", font: "'Lexend Exa'" },
+  maskottchen: { bg: "#fff", fg: "#141414", accent: "#e5642a", font: "'League Spartan'" },
+  signet: { bg: "#141414", fg: "#fff", accent: "#e5642a", font: "'Urbanist'" },
+  typenschild: { bg: "#c9cbcd", fg: "#141414", accent: "#e5642a", font: "'Saira'" },
+  leuchtreklame: { bg: "#16171a", fg: "#e8e6e3", accent: "#e5642a", font: "'Jost'" },
 };
 ---
 
 <Base
   title="kein-krempel – Entwürfe"
-  fonts="family=Barlow+Condensed:wght@800&family=Fraunces:ital,wght@1,300&family=Bricolage+Grotesque:wght@800&family=Archivo:wght@900&family=Shrikhand"
+  fonts="family=Barlow+Condensed:wght@800&family=Fraunces:ital,wght@1,300&family=Bricolage+Grotesque:wght@800&family=Archivo:wght@900&family=Shrikhand&family=Lexend+Exa:wght@700&family=League+Spartan:wght@900&family=Urbanist:wght@800&family=Saira:wght@800&family=Jost:wght@500"
 >
   <main>
-    <h1>kein-krempel · fünf Entwürfe</h1>
+    <h1>kein-krempel · Entwürfe (6–10 basieren auf der Ladenfront)</h1>
     <ol>
       {
         designs.map((d, i) => {

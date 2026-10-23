@@ -1,0 +1,606 @@
+---
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import Wordmark from "../../components/Wordmark.astro";
+import { business as b } from "../../data/business";
+
+const codes = ["WM", "TR", "HD", "GS", "KG"];
+const specs = [
+  ["Typ", "Haushaltsgroßgerät, generalüberholt"],
+  ["Hersteller", "Alle gängigen Marken"],
+  ["Garantie", `bis zu ${b.warrantyMonths} Monate`],
+  ["Prüfung", "DIN VDE 0701"],
+  ["Standort", `${b.address.city}-${b.address.district}`],
+  ["Zustand", "entkalkt · gereinigt · desinfiziert"],
+];
+---
+
+<Base
+  title="kein-krempel – Typenschild"
+  current="typenschild"
+  fonts="family=Saira:wdth,wght@50..125,100..900&family=Martian+Mono:wght@400;600"
+>
+  <div class="page">
+    <header class="bar">
+      <span class="tab"><Wordmark kein="#fff" krempel="#141414" /></span>
+      <a class="hotline" href={b.phoneHref}><small>Service</small> {b.phone}</a>
+    </header>
+
+    <section class="hero">
+      <div class="intro">
+        <p class="code">Technische Daten</p>
+        <h1>Einwandfrei.<br /><span>Steht ja auf dem Schild.</span></h1>
+        <p>Gebrauchte Haushaltsgeräte, die wir komplett überholt, geprüft und mit Garantie versehen haben.</p>
+      </div>
+
+      <div class="plate main">
+        <span class="rivet tl"></span><span class="rivet tr"></span><span class="rivet bl"></span><span class="rivet br"></span>
+        <div class="plate-head">
+          <Wordmark kein="#fff" krempel="#141414" />
+          <span class="sn">SN 09126-048</span>
+        </div>
+        <dl class="specs">
+          {
+            specs.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="plate-foot">
+          <div class="symbols" aria-hidden="true">
+            <span>✓</span><span>♻</span><span>⏚</span>
+            <span class="box">0701</span>
+          </div>
+          <div class="barcode" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="models">
+      <h2 class="code">Modellreihen</h2>
+      <ul>
+        {
+          b.categories.map((c, i) => (
+            <li class="plate small">
+              <span class="rivet tl" />
+              <span class="rivet tr" />
+              <span class="model">
+                KK-{codes[i]}-{String(i + 1).padStart(2, "0")}
+              </span>
+              <strong>{c.name}</strong>
+              <span class="warranty">Garantie ≤ {b.warrantyMonths} M</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="check">
+      <h2 class="code">Prüfablauf</h2>
+      <ol>
+        {
+          b.refurbishSteps.map((s, i) => (
+            <li style={`--d:${i * 0.12}s`}>
+              <span class="led" />
+              <span class="step">{String(i + 1).padStart(2, "0")}</span>
+              <span>{s}</span>
+              <span class="pass">PASS</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="services">
+      <article class="plate">
+        <span class="rivet tl"></span><span class="rivet tr"></span>
+        <h3>Reparatur</h3>
+        <p>{b.repair.intro}</p>
+        <table>
+          {
+            b.repair.options.map((o) => (
+              <tr>
+                <th>{o.name}</th>
+                <td>{o.price}</td>
+              </tr>
+            ))
+          }
+        </table>
+        <p class="fine">{b.repair.parts}</p>
+      </article>
+      <article class="plate">
+        <span class="rivet tl"></span><span class="rivet tr"></span>
+        <h3>Lieferung</h3>
+        <p>{b.delivery.intro}</p>
+        <table>
+          {
+            b.delivery.options.map((o) => (
+              <tr>
+                <th>
+                  {o.name}
+                  <small>{o.detail}</small>
+                </th>
+                <td>{o.price}</td>
+              </tr>
+            ))
+          }
+        </table>
+        <p class="fine">{b.delivery.note}</p>
+      </article>
+      <article class="plate orange">
+        <span class="rivet tl"></span><span class="rivet tr"></span>
+        <h3>Ankauf</h3>
+        <p>{b.pickup.intro}</p>
+        <p class="hint">
+          <Logo size="1.4rem" bg="#fff" fg="#141414" decorative />
+          Tipp: Hersteller und Typ stehen auf dem Typenschild oder der Bedienblende.
+        </p>
+        <ul>{b.pickup.checklist.map((c) => <li>{c}</li>)}</ul>
+      </article>
+    </section>
+
+    <section class="visit" id="besuch">
+      <div class="plate wide">
+        <span class="rivet tl"></span><span class="rivet tr"></span><span class="rivet bl"></span><span class="rivet br"></span>
+        <h2 class="code">Standort</h2>
+        <div class="visit-grid">
+          <div>
+            <p class="label">Adresse</p>
+            <p class="value">
+              {b.address.street}<br />{b.address.zip}
+              {b.address.city}
+            </p>
+            <p class="fine">{b.address.note}</p>
+          </div>
+          <div>
+            <p class="label">Betriebszeiten</p>
+            {
+              b.hours.map((h) => (
+                <p class="value">
+                  {h.days} <span>{h.time}</span>
+                </p>
+              ))
+            }
+          </div>
+          <div>
+            <p class="label">Kontakt</p>
+            <p class="value"><a href={b.phoneHref}>{b.phone}</a></p>
+            <p><a class="btn" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route ↗</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>{b.legalName}</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  .page {
+    --orange: #e5642a;
+    --ink: #141414;
+    --alu: #c9cbcd;
+    --alu-l: #e4e5e6;
+    --alu-d: #8e9194;
+    --mono: "Martian Mono", ui-monospace, monospace;
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 3px),
+      linear-gradient(180deg, #b9bbbd, #a9acae);
+    color: var(--ink);
+    font-family: "Saira", sans-serif;
+    font-variation-settings: "wdth" 87.5;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    padding-bottom: 5rem;
+  }
+  a {
+    color: inherit;
+  }
+  .code {
+    font: 600 0.72rem var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .code::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    background: var(--orange);
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background: var(--ink);
+    color: #fff;
+  }
+  .tab {
+    background: var(--orange);
+    padding: 1rem clamp(1rem, 4vw, 3rem);
+    font: 600 clamp(0.95rem, 2vw, 1.25rem) "Saira", sans-serif;
+    font-variation-settings: "wdth" 100;
+  }
+  .hotline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 clamp(1rem, 4vw, 3rem);
+    font: 600 0.95rem var(--mono);
+    text-decoration: none;
+  }
+  .hotline small {
+    color: var(--alu-d);
+    text-transform: uppercase;
+  }
+
+  .plate {
+    position: relative;
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.25) 0 1px, transparent 1px 2px),
+      linear-gradient(160deg, var(--alu-l), var(--alu) 55%, #b5b8ba);
+    border-radius: 0.6rem;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.8),
+      inset 0 -1px 0 rgb(0 0 0 / 0.2),
+      0 1px 0 rgb(255 255 255 / 0.4),
+      0 14px 30px rgb(0 0 0 / 0.22);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .plate.orange {
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 2px),
+      linear-gradient(160deg, #f07a43, var(--orange));
+    color: #fff;
+  }
+  .rivet {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff, #9a9da0 60%, #6c6f72);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.4);
+  }
+  .tl {
+    top: 10px;
+    left: 10px;
+  }
+  .tr {
+    top: 10px;
+    right: 10px;
+  }
+  .bl {
+    bottom: 10px;
+    left: 10px;
+  }
+  .br {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem);
+  }
+  h1 {
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.5);
+  }
+  h1 span {
+    font-weight: 300;
+    font-variation-settings: "wdth" 100;
+    font-size: 0.5em;
+    color: #3a3c3e;
+  }
+  .intro p:last-child {
+    max-width: 28rem;
+  }
+
+  .main {
+    padding: 0;
+    overflow: hidden;
+    animation: mount 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  }
+  .plate-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--orange);
+    padding: 1.25rem 2rem;
+    font-weight: 600;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-variation-settings: "wdth" 100;
+  }
+  .sn {
+    font: 600 0.7rem var(--mono);
+    color: #fff;
+  }
+  .specs {
+    margin: 0;
+    padding: 1rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5rem;
+  }
+  .specs div {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgb(0 0 0 / 0.18);
+  }
+  dt {
+    font: 400 0.65rem var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+  }
+  dd {
+    margin: 0;
+    font-weight: 600;
+  }
+  .plate-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem 1.75rem;
+  }
+  .symbols {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .symbols span {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    font-size: 0.95rem;
+  }
+  .symbols .box {
+    width: auto;
+    border-radius: 0.3rem;
+    padding: 0 0.4rem;
+    font: 600 0.7rem var(--mono);
+  }
+  .barcode {
+    width: 9rem;
+    height: 2.5rem;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0 2px,
+      transparent 2px 4px,
+      var(--ink) 4px 5px,
+      transparent 5px 8px,
+      var(--ink) 8px 11px,
+      transparent 11px 12px
+    );
+  }
+
+  section:not(.hero) {
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+  }
+  .models ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  .small {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 2rem;
+    transition: transform 0.2s;
+  }
+  .small:hover {
+    transform: translateY(-4px);
+  }
+  .model {
+    font: 600 0.7rem var(--mono);
+    color: var(--orange);
+  }
+  .small strong {
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    hyphens: auto;
+  }
+  .warranty {
+    font: 400 0.65rem var(--mono);
+    color: #555;
+    margin-top: 1rem;
+  }
+
+  .check ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--ink);
+    color: #eee;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .check li {
+    display: grid;
+    grid-template-columns: auto 2.5rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .led {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: #444;
+    animation: led 0.3s calc(0.8s + var(--d)) both;
+  }
+  .step {
+    color: var(--alu-d);
+  }
+  .pass {
+    color: var(--orange);
+    font-weight: 600;
+    animation: show 0.3s calc(0.9s + var(--d)) both;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  h3 {
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 0.5rem 0 0.75rem;
+    line-height: 1;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 0.6rem 0;
+    border-top: 1px solid rgb(0 0 0 / 0.2);
+    font-weight: 600;
+    vertical-align: top;
+  }
+  th small {
+    display: block;
+    font-weight: 400;
+    color: #555;
+  }
+  td {
+    text-align: right;
+    font: 600 1rem var(--mono);
+    color: var(--orange);
+    white-space: nowrap;
+  }
+  .fine {
+    font-size: 0.85rem;
+    color: #444;
+  }
+  .hint {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: rgb(0 0 0 / 0.15);
+    padding: 0.75rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .hint :global(svg) {
+    flex: none;
+  }
+  .plate.orange ul {
+    padding-left: 1.2rem;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .visit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .label {
+    font: 400 0.65rem var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    margin: 0 0 0.3rem;
+  }
+  .value {
+    font-weight: 800;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.25;
+    margin: 0 0 0.3rem;
+  }
+  .value span {
+    font-weight: 400;
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font: 600 0.8rem var(--mono);
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.4rem;
+  }
+  .btn:hover {
+    background: var(--orange);
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    font: 400 0.75rem var(--mono);
+  }
+
+  @keyframes mount {
+    from {
+      opacity: 0;
+      transform: perspective(900px) rotateX(18deg) translateY(30px);
+    }
+  }
+  @keyframes led {
+    to {
+      background: #3ddc84;
+      box-shadow: 0 0 8px #3ddc84;
+    }
+  }
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero,
+    .services,
+    .visit-grid {
+      grid-template-columns: 1fr;
+    }
+    .models ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .specs {
+      grid-template-columns: 1fr;
+    }
+    .check li {
+      grid-template-columns: auto 1fr auto;
+    }
+    .step {
+      display: none;
+    }
+  }
+</style>
