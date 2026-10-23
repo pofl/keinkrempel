@@ -1,0 +1,778 @@
+---
+import Base from "../../layouts/Base.astro";
+import { business as b } from "../../data/business";
+
+const tileColors = ["var(--blue)", "var(--yellow)", "var(--tomato)", "var(--mint)", "var(--lilac)"];
+---
+
+<Base
+  title="kein-krempel – Waschsalon"
+  current="waschsalon"
+  fonts="family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Gochi+Hand"
+>
+  <div class="page">
+    <header class="nav">
+      <a class="brand" href="#">kein<span>krempel</span></a>
+      <p class="status" data-status>
+        <span class="dot"></span>
+        <span data-status-text>Mo–Fr 10–17 · Sa 10–12</span>
+      </p>
+      <a class="btn" href={b.phoneHref}>Anrufen</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>
+          Kein Krempel.<br />
+          <span class="hl">Nur gute Geräte.</span>
+        </h1>
+        <p>
+          Gebrauchte Waschmaschinen, Trockner, Herde, Geschirrspüler und Kühlschränke – frisch überholt in Chemnitz-Bernsdorf und
+          fit für die nächsten Jahre.
+        </p>
+        <div class="cta">
+          <a class="btn big" href={b.phoneHref}>☎ {b.phone}</a>
+          <a class="scribble" href="#besuch">oder einfach vorbeikommen ↓</a>
+        </div>
+      </div>
+
+      <div class="machine-wrap" aria-hidden="true">
+        <div class="machine">
+          <div class="panel">
+            <span class="knob"></span>
+            <span class="display">1400</span>
+            <span class="leds"><i></i><i></i><i></i></span>
+          </div>
+          <div class="door">
+            <div class="drum">
+              <div class="laundry">
+                <i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="water"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sticker">
+          <strong>{b.warrantyMonths}</strong>
+          <span>Monate<br />Garantie!</span>
+        </div>
+        <span class="bubble" style="--x:10%;--s:1.4rem;--t:0s"></span>
+        <span class="bubble" style="--x:80%;--s:0.9rem;--t:1.2s"></span>
+        <span class="bubble" style="--x:30%;--s:1.1rem;--t:2.4s"></span>
+        <span class="bubble" style="--x:65%;--s:1.6rem;--t:3.1s"></span>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div>
+        {
+          [0, 1].map(() =>
+            b.categories.map((c) => (
+              <span>
+                {c.name} <b>✺</b>
+              </span>
+            )),
+          )
+        }
+      </div>
+    </div>
+
+    <section class="tiles">
+      <h2>Was darf's sein?</h2>
+      <ul>
+        {
+          b.categories.map((c, i) => (
+            <li style={`--tile:${tileColors[i]};--r:${i % 2 ? 2 : -2}deg`}>
+              <span class="tile-verb">{c.short}</span>
+              <span class="tile-name">{c.name}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="promise">
+        <p class="scribble">Jedes Gerät bei uns ist …</p>
+        <ul>{b.refurbishSteps.map((s) => <li>✓ {s}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="board">
+      <h2>Preistafel</h2>
+      <div class="board-grid">
+        <article class="card">
+          <h3>Reparatur</h3>
+          <p>{b.repair.intro}</p>
+          {
+            b.repair.options.map((o) => (
+              <div class="row">
+                <div>
+                  <strong>{o.name}</strong>
+                  <small>{o.text}</small>
+                </div>
+                <span class="tag">{o.price}</span>
+              </div>
+            ))
+          }
+          <p class="note">{b.repair.parts}</p>
+        </article>
+        <article class="card yellow">
+          <h3>Lieferung</h3>
+          <p>{b.delivery.intro}</p>
+          {
+            b.delivery.options.map((o) => (
+              <div class="row">
+                <div>
+                  <strong>{o.name}</strong>
+                  <small>{o.detail}</small>
+                </div>
+                <span class="tag">{o.price}</span>
+              </div>
+            ))
+          }
+          <p class="note">{b.delivery.note}</p>
+        </article>
+        <article class="card blue">
+          <h3>Wir holen ab &amp; kaufen an</h3>
+          <p>{b.pickup.intro}</p>
+          <p class="scribble small">Am Telefon brauchen wir:</p>
+          <ol>{b.pickup.checklist.map((c) => <li>{c}</li>)}</ol>
+        </article>
+      </div>
+    </section>
+
+    <section class="visit" id="besuch">
+      <div class="visit-inner">
+        <h2>Komm vorbei!</h2>
+        <div class="visit-grid">
+          <div>
+            <p class="label">Hier sind wir</p>
+            <p class="big">
+              {b.address.street}<br />
+              {b.address.zip}
+              {b.address.city}
+            </p>
+            <p class="scribble small">({b.address.note})</p>
+            <a class="btn" href={b.mapsHref} target="_blank" rel="noopener noreferrer">Route planen ↗</a>
+          </div>
+          <div>
+            <p class="label">Geöffnet</p>
+            {
+              b.hours.map((h) => (
+                <p class="big">
+                  {h.days} <span class="light">{h.time}</span>
+                </p>
+              ))
+            }
+            <p class="label">Telefon</p>
+            <p class="big"><a href={b.phoneHref}>{b.phone}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>{b.legalName} · Chemnitz</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </footer>
+  </div>
+</Base>
+
+<script>
+  const el = document.querySelector("[data-status]");
+  const text = document.querySelector("[data-status-text]");
+  if (el && text) {
+    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Berlin" }));
+    const day = now.getDay();
+    const h = now.getHours() + now.getMinutes() / 60;
+    const open = (day >= 1 && day <= 5 && h >= 10 && h < 17) || (day === 6 && h >= 10 && h < 12);
+    el.classList.add(open ? "open" : "closed");
+    text.textContent = open ? "Jetzt geöffnet" : "Gerade geschlossen – ruf trotzdem an";
+  }
+</script>
+
+<style>
+  .page {
+    --ink: #14213d;
+    --bg: #fff8ec;
+    --blue: #7cc6fe;
+    --yellow: #ffd23f;
+    --tomato: #ff5d4a;
+    --mint: #7be0b0;
+    --lilac: #c9a7ff;
+    --display: "Bricolage Grotesque", sans-serif;
+    --hand: "Gochi Hand", cursive;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    overflow-x: clip;
+    padding-bottom: 5rem;
+  }
+  a {
+    color: inherit;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem clamp(1rem, 4vw, 3rem);
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.6rem;
+    text-decoration: none;
+    letter-spacing: -0.03em;
+  }
+  .brand span {
+    background: var(--tomato);
+    color: var(--bg);
+    padding: 0 0.35rem;
+    margin-left: 0.15rem;
+    border-radius: 0.4rem;
+    display: inline-block;
+    rotate: -3deg;
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: #bbb;
+  }
+  .status.open .dot {
+    background: #22c55e;
+    box-shadow: 0 0 0 0 #22c55e;
+    animation: ping 1.8s infinite;
+  }
+  .status.closed .dot {
+    background: var(--tomato);
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    border: 3px solid var(--ink);
+    transition:
+      transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1),
+      background 0.2s;
+  }
+  .btn:hover {
+    transform: rotate(-3deg) scale(1.05);
+    background: var(--tomato);
+  }
+  .btn.big {
+    font-size: 1.3rem;
+    padding: 0.9rem 1.6rem;
+  }
+  .scribble {
+    font-family: var(--hand);
+    font-size: 1.5rem;
+    color: var(--tomato);
+  }
+  .scribble.small {
+    font-size: 1.2rem;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 2rem;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+  }
+  h1 {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-variation-settings: "wdth" 80;
+    margin: 0 0 1.5rem;
+  }
+  .hl {
+    background: linear-gradient(transparent 55%, var(--yellow) 55% 92%, transparent 92%);
+  }
+  .hero-copy p {
+    max-width: 32rem;
+    font-size: 1.15rem;
+  }
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  .cta .scribble {
+    text-decoration: none;
+  }
+
+  .machine-wrap {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 380px);
+  }
+  .machine {
+    background: #fff;
+    border: 4px solid var(--ink);
+    border-radius: 1.75rem;
+    box-shadow: 12px 12px 0 var(--ink);
+    padding: 1rem 1.25rem 2rem;
+    animation: wobble 0.35s ease-in-out infinite alternate;
+    transform-origin: 50% 100%;
+  }
+  .panel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 4px solid var(--ink);
+    margin-bottom: 1.75rem;
+  }
+  .knob {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 4px solid var(--ink);
+    background: conic-gradient(var(--yellow) 0 25%, #fff 0);
+  }
+  .display {
+    font: 700 0.9rem ui-monospace, monospace;
+    background: var(--ink);
+    color: var(--mint);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.4rem;
+  }
+  .leds {
+    display: flex;
+    gap: 0.35rem;
+    margin-left: auto;
+  }
+  .leds i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--tomato);
+  }
+  .leds i:nth-child(2) {
+    background: var(--yellow);
+  }
+  .leds i:nth-child(3) {
+    background: var(--mint);
+  }
+  .door {
+    width: 82%;
+    margin: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 14px solid #dfe6ee;
+    outline: 4px solid var(--ink);
+    box-shadow: inset 0 0 0 4px var(--ink);
+    overflow: hidden;
+  }
+  .drum {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 35% 30%, #fff 0 8%, transparent 9%), #cfeaff;
+  }
+  .laundry {
+    position: absolute;
+    inset: 8%;
+    animation: spin 2.4s linear infinite;
+  }
+  .laundry i {
+    position: absolute;
+    width: 32%;
+    height: 22%;
+    border-radius: 40% 60% 50% 40%;
+    border: 3px solid var(--ink);
+  }
+  .laundry i:nth-child(1) {
+    background: var(--tomato);
+    top: 0;
+    left: 30%;
+  }
+  .laundry i:nth-child(2) {
+    background: var(--yellow);
+    top: 35%;
+    right: 0;
+    rotate: 70deg;
+  }
+  .laundry i:nth-child(3) {
+    background: var(--lilac);
+    bottom: 2%;
+    left: 35%;
+    rotate: 20deg;
+  }
+  .laundry i:nth-child(4) {
+    background: var(--mint);
+    top: 38%;
+    left: 0;
+    rotate: -60deg;
+  }
+  .laundry i:nth-child(5) {
+    background: #fff;
+    width: 18%;
+    height: 18%;
+    border-radius: 50%;
+    top: 40%;
+    left: 41%;
+  }
+  .water {
+    position: absolute;
+    inset: 55% -50% -50%;
+    background: rgb(60 140 230 / 0.45);
+    border-radius: 42%;
+    animation: spin 5s linear infinite;
+  }
+  .sticker {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    width: 8.5rem;
+    aspect-ratio: 1;
+    background: var(--yellow);
+    border: 4px solid var(--ink);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1;
+    rotate: 12deg;
+    clip-path: polygon(
+      50% 0%,
+      61% 12%,
+      77% 6%,
+      80% 22%,
+      96% 27%,
+      89% 42%,
+      100% 55%,
+      87% 65%,
+      91% 82%,
+      74% 82%,
+      66% 97%,
+      52% 88%,
+      38% 99%,
+      30% 84%,
+      13% 88%,
+      14% 71%,
+      0% 61%,
+      11% 47%,
+      3% 31%,
+      19% 25%,
+      22% 8%,
+      38% 12%
+    );
+    animation: bob 3s ease-in-out infinite;
+  }
+  .sticker strong {
+    font-size: 2.6rem;
+    font-weight: 800;
+  }
+  .sticker span {
+    font-family: var(--hand);
+    font-size: 1rem;
+  }
+  .bubble {
+    position: absolute;
+    bottom: 30%;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: radial-gradient(circle at 30% 30%, #fff, rgb(124 198 254 / 0.4));
+    animation: float 4.5s var(--t) ease-in infinite both;
+  }
+
+  .marquee {
+    background: var(--ink);
+    color: var(--bg);
+    overflow: hidden;
+    rotate: -1.5deg;
+    margin: 2rem -1rem;
+    padding: 0.9rem 0;
+  }
+  .marquee div {
+    display: flex;
+    width: max-content;
+    animation: slide 22s linear infinite;
+  }
+  .marquee span {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 800;
+    padding-right: 2rem;
+    white-space: nowrap;
+  }
+  .marquee b {
+    color: var(--yellow);
+    padding-left: 2rem;
+  }
+
+  section:not(.hero) {
+    padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 3rem);
+  }
+  h2 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin: 0 0 2rem;
+  }
+
+  .tiles ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tiles > ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  .tiles > ul li {
+    background: var(--tile);
+    border: 4px solid var(--ink);
+    border-radius: 1.5rem;
+    padding: 1.5rem 1.25rem;
+    min-height: 11rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    rotate: var(--r);
+    box-shadow: 6px 6px 0 var(--ink);
+    transition:
+      rotate 0.25s cubic-bezier(0.3, 1.8, 0.5, 1),
+      translate 0.25s;
+  }
+  .tiles > ul li:hover {
+    rotate: 0deg;
+    translate: 0 -6px;
+  }
+  .tile-verb {
+    font-family: var(--hand);
+    font-size: 1.4rem;
+  }
+  .tile-name {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    hyphens: auto;
+  }
+  .promise {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+  }
+  .promise p {
+    margin: 0;
+  }
+  .promise ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .promise li {
+    background: #fff;
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .card {
+    background: #fff;
+    border: 4px solid var(--ink);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .card.yellow {
+    background: var(--yellow);
+  }
+  .card.blue {
+    background: var(--blue);
+  }
+  .card h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0 0 0.75rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-top: 3px dashed var(--ink);
+  }
+  .row small {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.75;
+  }
+  .tag {
+    position: relative;
+    background: var(--tomato);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 0.35rem 0.8rem 0.35rem 1.4rem;
+    border-radius: 0.3rem 0.6rem 0.6rem 0.3rem;
+    clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%);
+    white-space: nowrap;
+  }
+  .tag::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    translate: 0 -50%;
+  }
+  .note {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-bottom: 0;
+  }
+  .card ol {
+    padding-left: 1.2rem;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .visit-inner {
+    background: var(--tomato);
+    color: #fff;
+    border: 4px solid var(--ink);
+    border-radius: 2rem;
+    padding: clamp(2rem, 5vw, 4rem);
+    box-shadow: 12px 12px 0 var(--ink);
+  }
+  .visit h2 {
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: 0.9;
+  }
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .label {
+    font-family: var(--hand);
+    font-size: 1.3rem;
+    margin: 1rem 0 0.25rem;
+    color: var(--ink);
+  }
+  .big {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .light {
+    font-weight: 400;
+  }
+  .visit .scribble {
+    color: var(--yellow);
+  }
+  .visit .btn {
+    margin-top: 1rem;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem clamp(1rem, 4vw, 3rem);
+    font-size: 0.9rem;
+  }
+
+  @keyframes spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes wobble {
+    from {
+      transform: rotate(-0.6deg);
+    }
+    to {
+      transform: rotate(0.6deg);
+    }
+  }
+  @keyframes bob {
+    50% {
+      translate: 0 -8px;
+      rotate: 6deg;
+    }
+  }
+  @keyframes float {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0.6);
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-260px) scale(1.1);
+    }
+  }
+  @keyframes slide {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes ping {
+    70% {
+      box-shadow: 0 0 0 8px rgb(34 197 94 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(34 197 94 / 0);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero,
+    .board-grid,
+    .visit-grid {
+      grid-template-columns: 1fr;
+    }
+    .tiles > ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .status {
+      display: none;
+    }
+    .sticker {
+      right: -0.5rem;
+    }
+  }
+</style>

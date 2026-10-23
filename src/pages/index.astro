@@ -1,17 +1,95 @@
 ---
+import Base from "../layouts/Base.astro";
+import { designs } from "../data/business";
 
+const swatches: Record<string, { bg: string; fg: string; accent: string; font: string }> = {
+  werkstatt: { bg: "#1a1b1d", fg: "#efece4", accent: "#ff5a1f", font: "'Barlow Condensed'" },
+  kreislauf: { bg: "#f4ede1", fg: "#1e3a2d", accent: "#c4623a", font: "'Fraunces'" },
+  waschsalon: { bg: "#ffd23f", fg: "#14213d", accent: "#ff5d4a", font: "'Bricolage Grotesque'" },
+  raster: { bg: "#f7f6f2", fg: "#0b0b0b", accent: "#e3120b", font: "'Archivo'" },
+  ostmoderne: { bg: "#d4572a", fg: "#fbf3e1", accent: "#e3a72f", font: "'Shrikhand'" },
+};
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<Base
+  title="kein-krempel – Entwürfe"
+  fonts="family=Barlow+Condensed:wght@800&family=Fraunces:ital,wght@1,300&family=Bricolage+Grotesque:wght@800&family=Archivo:wght@900&family=Shrikhand"
+>
+  <main>
+    <h1>kein-krempel · fünf Entwürfe</h1>
+    <ol>
+      {
+        designs.map((d, i) => {
+          const s = swatches[d.slug];
+          return (
+            <li>
+              <a
+                href={`/entwurf/${d.slug}`}
+                style={`--bg:${s.bg};--fg:${s.fg};--accent:${s.accent};--font:${s.font}`}
+              >
+                <span class="n">{i + 1}</span>
+                <span class="name">{d.name}</span>
+                <span class="mood">{d.mood}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </main>
+</Base>
+
+<style>
+  main {
+    min-height: 100vh;
+    background: #121212;
+    color: #eee;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    padding: clamp(1.5rem, 5vw, 4rem);
+  }
+  h1 {
+    font: 500 0.9rem ui-monospace, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 2rem;
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 22rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: var(--bg);
+    color: var(--fg);
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  a:hover {
+    transform: translateY(-6px);
+  }
+  .n {
+    font: 600 0.8rem ui-monospace, monospace;
+    color: var(--accent);
+  }
+  .name {
+    font-family: var(--font), sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    margin-top: auto;
+  }
+  .mood {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    opacity: 0.8;
+  }
+</style>
